@@ -1,0 +1,15 @@
+{
+  "name": "zebpay_assignment",
+  "version": "1.0.0",
+  "description": "Zebpay assignment for Rest API on top of Ethereum Blockchain",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Omkar Sai Sunku",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "web3": "^1.3.1"
+  }
+}

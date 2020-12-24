@@ -1,0 +1,8 @@
+const AccountTx1 = '0x4640007c4f0f9175c48eff60e7969b2c3dc0312c7527ad1be4d2e1a2752620d3';
+const AccountTx2 = '0x4640007c4f0f9175c48eff60e7969b2c3dc0312c7527ad1be4d2e1a2752620d3';
+
+const ContractTx1 = '0x9c4561d2deae5c491d934ea621bb00c91c67efbcd392dc36bee2d7de7d177167';
+const ContractTx2 = '0x8fbaafa32b6715f9bfc509905757e9fb899651cee2837a157c8b4ceeddc9aab8';
+
+const ERC20Tx1 = '0x7726d6b74926dbac7da2e4e5da24c00b8c45a263da9b29d2b9a1dedb9ca0eb20';
+const ERC20Tx2 = '0x9c4561d2deae5c491d934ea621bb00c91c67efbcd392dc36bee2d7de7d177167';
