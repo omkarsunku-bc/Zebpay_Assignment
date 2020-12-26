@@ -2,63 +2,11 @@ const express = require('express');
 const transactionRouter = express.Router();
 const TRANSACTION_PATH = '/transactions/:txid';
 const TRANSACTION_PATH_WITHOUT_ID = '/transactions';
-const Account_Trans = "0x";
-const Erc20_Trans = "0xa9059cbb"; //MethodId is the input for ERC20
-const service = require("../Services/connectWeb3");
-const AccountTran = require('../Models/AccountTranModel');
-const Erc20Trans = require('../Models/ERC20TranModel');
-const ContractTran = require('../Models/ContractExeModel');
+const TRANSACTION_CONTROLLER = require('../Controllers/transactionController');
+const BASE_CONTROLLER = require('../Controllers/baseController');
 
-transactionRouter.get(TRANSACTION_PATH, (req, res) => {
-    try {
-        const transactionID = req.params.txid;
-        if (transactionID && !transactionID == undefined) {
-            res.statusCode = 400;
-            res.send({ status: 400, data: { message: 'Please give a transaction Id at the end of this url and try again.Please try using as this format $HOST:$PORT/eth/api/v1/transaction/<YOUR_TXID>' } });
-            return;
-        }
-        service.getTransaction(transactionID)
-            .then(transaction => {
-                service.getTransactionReceipt(transactionID)
-                    .then(receipt => {
-                        if (transaction.to) {
-                            //Account Transfers
-                            if (transaction.input === Account_Trans) {
-                                res.send(AccountTran.accountTransfer(transaction, receipt));
-                            }
-                            //Erc20 Token transfers
-                            else if (transaction.input.substring(0, 10) === Erc20_Trans) {
-                                res.send(Erc20Trans.Erc20Transfer(transaction, receipt));
-                            }
-                            //Contract execution
-                            else {
-                                res.send(ContractTran.contractExecution(transaction, receipt));
-                            }
-                        } else {
-                            res.send({ status: 500, data: { messgae: 'Invalid Transaction Id' } })
-                        }
-                    })
-                    .catch(error => {
-                        res.statusCode = 500;
-                        res.send({ status: 500, data: { message: 'Unhandled error: ' + error } });
-                        return;
-                    });
-            })
-            .catch(error => {
-                res.statusCode = 500;
-                res.send({ status: 500, data: { message: 'Unhandled error: ' + error } });
-                return;
-            });
-    } catch (err) {
-        res.statusCode = 500;
-        res.send({ status: 500, data: { message: 'Unhandled error: ' + err } });
-        return;
-    }
-});
+transactionRouter.get(TRANSACTION_PATH, TRANSACTION_CONTROLLER.transactionController);
 
-transactionRouter.get(TRANSACTION_PATH_WITHOUT_ID, (req, res) => {
-    res.statusCode = 500;
-    res.send({ status: 500, data: 'Please give a transaction Id at the end of this url and try again. Please try using as this format $HOST:$PORT/eth/api/v1/transaction/<YOUR_TXID>' });
-});
+transactionRouter.get(TRANSACTION_PATH_WITHOUT_ID, BASE_CONTROLLER.baseController);
 
 module.exports = transactionRouter;
