@@ -7,7 +7,7 @@ REST API on top of Ethereum blockchain to server transaction details and account
 
 3.Contract execution
 
-API deployed at http://52.41.96.243:5000/eth/api/v1/transactions/{TXID}
+API deployed at http://52.41.96.243:5000/eth/api/v1/transactions/{TXID} used AWS for deployment
 
 Software used to design REST API:
 
