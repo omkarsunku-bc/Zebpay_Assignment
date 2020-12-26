@@ -7,10 +7,10 @@ const ContractTran = require('../Models/ContractExeModel');
 
 exports.transactionController = (req, res) => {
     try {
-        const transactionID = req.params.transactionid;
+        const transactionID = req.params.txid;
         if (transactionID && !transactionID == undefined) {
             res.statusCode = 400;
-            res.send({ status: 400, data: { message: "Please give a transaction Id and try again" } });
+            res.send({ status: 400, data: { message: 'Please give a transaction Id at the end of this url and try again.Please try using as this format $HOST:$PORT/eth/api/v1/transaction/<YOUR_TXID>' } });
             return;
         }
         service.getTransaction(transactionID)
@@ -31,15 +31,19 @@ exports.transactionController = (req, res) => {
                                 res.send(ContractTran.contractExecution(transaction, receipt));
                             }
                         } else {
-                            res.send({ status: 500, data: { messgae: "Invalid Transaction Id" } })
+                            res.send({ status: 500, data: { messgae: 'Invalid Transaction Id' } })
                         }
                     })
                     .catch(error => {
-                        throw error;
+                        res.statusCode = 500;
+                        res.send({ status: 500, data: { message: 'Unhandled error: ' + error } });
+                        return;
                     });
             })
             .catch(error => {
-                throw error;
+                res.statusCode = 500;
+                res.send({ status: 500, data: { message: 'Unhandled error: ' + error } });
+                return;
             });
     } catch (err) {
         res.statusCode = 500;
